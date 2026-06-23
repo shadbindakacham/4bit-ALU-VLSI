@@ -1,0 +1,25 @@
+# synth.ys
+# Yosys synthesis script for 4-bit ALU
+
+# Read all source files
+read_verilog ../rtl/full_adder.v
+read_verilog ../rtl/ripple_adder.v
+read_verilog ../rtl/alu.v
+
+# Set top-level module
+hierarchy -check -top alu
+
+# Synthesize
+synth -top alu
+
+# Map to internal cell library
+abc -g gates
+
+# Clean up
+clean
+
+# Show gate-level stats
+stat
+
+# Write gate-level netlist
+write_verilog alu_netlist.v
